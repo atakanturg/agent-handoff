@@ -1,4 +1,4 @@
-# Surcease Handoff Package
+# Agent Handoff Package
 
 This repo is a TypeScript CLI package, not a Cloudflare web deployment.
 
@@ -21,4 +21,3 @@ npm publish --tag beta --access public
 ## Environment variables
 
 None required.
-
