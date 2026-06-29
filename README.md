@@ -29,8 +29,10 @@ npm install -g .
 After publishing:
 
 ```bash
-npm install -g agent-handoff
+npm install -g @atakanturgut/agent-handoff
 ```
+
+The npm package is scoped because the unscoped `agent-handoff` name is already taken. The installed CLI command is still `agent-handoff`.
 
 ## Claude Code Setup
 
