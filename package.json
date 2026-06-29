@@ -4,7 +4,7 @@
   "description": "Universal handoff protocol and adapter tooling for AI coding agents.",
   "type": "module",
   "bin": {
-    "agent-handoff": "./dist/src/cli.js"
+    "agent-handoff": "dist/src/cli.js"
   },
   "files": [
     "dist",
