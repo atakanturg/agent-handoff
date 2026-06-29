@@ -1,0 +1,40 @@
+{
+  "name": "agent-handoff",
+  "version": "0.1.0-beta.0",
+  "description": "Universal handoff protocol and adapter tooling for AI coding agents.",
+  "type": "module",
+  "bin": {
+    "agent-handoff": "./dist/src/cli.js"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test --import tsx test/*.test.ts",
+    "prepare": "npm run build",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "handoff",
+    "claude",
+    "codex",
+    "gemini"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.4"
+  }
+}
