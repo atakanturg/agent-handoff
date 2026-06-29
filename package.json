@@ -38,11 +38,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/atakanturg/agent-handoff.git"
+    "url": "git+https://github.com/atakanturg/surcease-handoff.git"
   },
-  "homepage": "https://github.com/atakanturg/agent-handoff",
+  "homepage": "https://github.com/atakanturg/surcease-handoff",
   "bugs": {
-    "url": "https://github.com/atakanturg/agent-handoff/issues"
+    "url": "https://github.com/atakanturg/surcease-handoff/issues"
   },
   "publishConfig": {
     "access": "public",
