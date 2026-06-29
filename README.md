@@ -1,3 +1,9 @@
+# update
+
+published to npm
+
+install using: npm i @atakanturgut/agent-handoff
+
 # agent-handoff
 
 `agent-handoff` is an open-source that automatically makes it so that when a coding agent is near their quote they create a handoff.md allowing you to seamlessly move between tools (like claude code, codex, antigravity, etc.)
