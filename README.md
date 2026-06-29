@@ -1,10 +1,10 @@
 # agent-handoff
 
-`agent-handoff` is an open-source npm CLI for handing work from one AI coding agent to another without losing the plot.
+`agent-handoff` is an open-source that automatically makes it so that when a coding agent is near their quote they create a handoff.md allowing you to seamlessly move between tools (like claude code, codex, antigravity, etc.)
 
 It is built as a universal handoff protocol plus agent-specific adapters. The protocol is `handoff.md`, `.handoff-needed`, and `.agent-handoff/state.json`. Only context-usage detection is agent-specific.
 
-Status: `0.1.0-beta.0`. Ready for dogfooding and feedback, not yet production-hardened across every agent and platform.
+Release: `0.1.0-beta.0`. Ready for dogfooding and feedback, not yet production-hardened across every agent and platform.
 
 ## What Problem This Solves
 
