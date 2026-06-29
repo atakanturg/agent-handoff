@@ -1,9 +1,3 @@
-# update
-
-published to npm
-
-install using: npm i @atakanturgut/agent-handoff
-
 # agent-handoff
 
 `agent-handoff` is an open-source that automatically makes it so that when a coding agent is near their quote they create a handoff.md allowing you to seamlessly move between tools (like claude code, codex, antigravity, etc.)
@@ -11,6 +5,16 @@ install using: npm i @atakanturgut/agent-handoff
 It is built as a universal handoff protocol plus agent-specific adapters. The protocol is `handoff.md`, `.handoff-needed`, and `.agent-handoff/state.json`. Only context-usage detection is agent-specific.
 
 Release: `0.1.0-beta.0`. Ready for dogfooding and feedback, not yet production-hardened across every agent and platform.
+
+## install
+
+```bash
+npm install -g .
+```
+
+```bash
+npm i @atakanturgut/agent-handoff
+```
 
 ## What Problem This Solves
 
@@ -26,17 +30,6 @@ AI coding agents can run out of useful context mid-task. A clean handoff lets th
 
 V1 uses Claude Code status-line integration because it is an explicit supported surface for current context data. It does not use hidden Claude CLI behavior, `/usage` polling, transcript JSONL scraping, a daemon, or paid API calls.
 
-## Install
-
-```bash
-npm install -g .
-```
-
-After publishing:
-
-```bash
-npm install -g @atakanturgut/agent-handoff
-```
 
 The npm package is scoped because the unscoped `agent-handoff` name is already taken. The installed CLI command is still `agent-handoff`.
 
