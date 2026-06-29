@@ -9,10 +9,6 @@ Release: `0.1.0-beta.0`. Ready for dogfooding and feedback, not yet production-h
 ## install
 
 ```bash
-npm install -g .
-```
-
-```bash
 npm i @atakanturgut/agent-handoff
 ```
 
