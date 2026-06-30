@@ -4,7 +4,7 @@
 
 It is built as a universal handoff protocol plus agent-specific adapters. The protocol is `handoff.md`, `.handoff-needed`, and `.agent-handoff/state.json`. Only context-usage detection is agent-specific.
 
-Release: `0.1.0-beta.0`. Ready for dogfooding and feedback, not yet production-hardened across every agent and platform.
+Release: `0.1.0-beta.1`. Ready for dogfooding and feedback, not yet production-hardened across every agent and platform.
 
 ## install
 

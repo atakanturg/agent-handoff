@@ -8,8 +8,8 @@ export interface SettingsWriteResult {
   backupPath?: string;
 }
 
-const STATUSLINE_COMMAND = "~/.claude/agent-handoff/statusline-handoff-watch.sh";
-const HOOK_COMMAND = "~/.claude/agent-handoff/handoff-required-hook.sh";
+const STATUSLINE_COMMAND = "statusline-handoff-watch.sh";
+const HOOK_COMMAND = "handoff-required-hook.sh";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
@@ -24,20 +24,24 @@ export function isAgentHandoffStatusLine(value: unknown): boolean {
   return commandContains(value, STATUSLINE_COMMAND);
 }
 
-export function makeStatusLine(threshold: number): Record<string, unknown> {
+export function makeStatusLine(
+  threshold: number,
+  mode: string,
+  statuslinePath = "~/.claude/agent-handoff/statusline-handoff-watch.sh",
+): Record<string, unknown> {
   return {
     type: "command",
-    command: `AGENT_HANDOFF_THRESHOLD=${threshold} ${STATUSLINE_COMMAND}`,
+    command: `AGENT_HANDOFF_THRESHOLD=${threshold} AGENT_HANDOFF_MODE=${mode} "${statuslinePath}"`,
   };
 }
 
-export function makeHook(mode: string): Record<string, unknown> {
+export function makeHook(mode: string, hookPath = "~/.claude/agent-handoff/handoff-required-hook.sh"): Record<string, unknown> {
   return {
     matcher: "*",
     hooks: [
       {
         type: "command",
-        command: `AGENT_HANDOFF_MODE=${mode} ${HOOK_COMMAND}`,
+        command: `AGENT_HANDOFF_MODE=${mode} "${hookPath}"`,
       },
     ],
     agentHandoffOwned: true,
@@ -65,16 +69,19 @@ function removeOwnedHookEntries(hooks: unknown): Record<string, unknown[]> {
 
 export function installClaudeSettings(
   current: Record<string, unknown>,
-  options: Pick<ClaudeInstallOptions, "threshold" | "mode" | "force">,
+  options: Pick<ClaudeInstallOptions, "threshold" | "mode" | "force"> & {
+    statuslinePath?: string;
+    hookPath?: string;
+  },
 ): Record<string, unknown> {
   const next = structuredClone(current);
   const existingStatusLine = next.statusLine;
   if (existingStatusLine !== undefined && !isAgentHandoffStatusLine(existingStatusLine) && !options.force) {
     throw new Error("Claude settings already contain a statusLine. Re-run with --force to replace it after backup.");
   }
-  next.statusLine = makeStatusLine(options.threshold);
+  next.statusLine = makeStatusLine(options.threshold, options.mode, options.statuslinePath);
   const hooks = removeOwnedHookEntries(next.hooks);
-  hooks.UserPromptSubmit = [...(hooks.UserPromptSubmit ?? []), makeHook(options.mode)];
+  hooks.UserPromptSubmit = [...(hooks.UserPromptSubmit ?? []), makeHook(options.mode, options.hookPath)];
   next.hooks = hooks;
   return next;
 }

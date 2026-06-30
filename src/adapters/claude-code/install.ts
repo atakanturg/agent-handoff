@@ -32,6 +32,8 @@ export function installClaudeCode(home: string, options: ClaudeInstallOptions): 
       threshold: options.threshold,
       mode: options.mode,
       force: options.force,
+      statuslinePath: statusline,
+      hookPath: hook,
     }),
   );
 

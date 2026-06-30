@@ -3,7 +3,13 @@ export function hookScriptTemplate(): string {
 set -u
 
 input="$(cat)"
-cwd="$(printf '%s' "$input" | jq -r '.workspace.current_dir // .cwd // .current_dir // empty' 2>/dev/null)"
+cwd="$(INPUT_JSON="$input" node -e '
+try {
+  const data = JSON.parse(process.env.INPUT_JSON || "{}");
+  const cwd = data?.workspace?.current_dir || data?.cwd || data?.current_dir || "";
+  process.stdout.write(String(cwd).replace(/\\n/g, " "));
+} catch {}
+' 2>/dev/null || true)"
 mode="\${AGENT_HANDOFF_MODE:-marker}"
 
 if [ -z "$cwd" ] || [ ! -e "$cwd/.handoff-needed" ]; then

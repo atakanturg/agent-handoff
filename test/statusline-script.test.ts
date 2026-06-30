@@ -9,7 +9,9 @@ import { statuslineScriptTemplate } from "../src/adapters/claude-code/statusline
 function makeScript(): string {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "agent-handoff-script-"));
   const script = path.join(dir, "statusline-handoff-watch.sh");
-  fs.writeFileSync(script, statuslineScriptTemplate());
+  const content = statuslineScriptTemplate();
+  assert.equal(content.includes("jq "), false);
+  fs.writeFileSync(script, content);
   fs.chmodSync(script, 0o755);
   return script;
 }

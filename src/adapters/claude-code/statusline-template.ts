@@ -3,8 +3,18 @@ export function statuslineScriptTemplate(): string {
 set -u
 
 input="$(cat)"
-cwd="$(printf '%s' "$input" | jq -r '.workspace.current_dir // .cwd // .current_dir // empty' 2>/dev/null)"
-used="$(printf '%s' "$input" | jq -r '.context_window.used_percentage // 0' 2>/dev/null)"
+parsed="$(INPUT_JSON="$input" node -e '
+try {
+  const data = JSON.parse(process.env.INPUT_JSON || "{}");
+  const cwd = data?.workspace?.current_dir || data?.cwd || data?.current_dir || "";
+  const used = data?.context_window?.used_percentage ?? data?.context?.used_percentage ?? 0;
+  process.stdout.write(String(cwd).replace(/\\n/g, " ") + "\\n" + String(used));
+} catch {
+  process.stdout.write("\\n0");
+}
+' 2>/dev/null || printf '\\n0')"
+cwd="$(printf '%s' "$parsed" | sed -n '1p')"
+used="$(printf '%s' "$parsed" | sed -n '2p')"
 threshold="\${AGENT_HANDOFF_THRESHOLD:-90}"
 
 if [ -z "$used" ] || [ "$used" = "null" ]; then

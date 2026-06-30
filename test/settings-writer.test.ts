@@ -59,6 +59,26 @@ test("uninstall removes only owned settings", () => {
   assert.equal((removed.hooks as Record<string, unknown[]>).UserPromptSubmit, undefined);
 });
 
+test("install can write absolute Claude script paths", () => {
+  const merged = installClaudeSettings(
+    {},
+    {
+      threshold: 88,
+      mode: "warn",
+      force: false,
+      statuslinePath: "/tmp/agent-handoff/statusline-handoff-watch.sh",
+      hookPath: "/tmp/agent-handoff/handoff-required-hook.sh",
+    },
+  );
+
+  assert.equal(
+    (merged.statusLine as { command: string }).command,
+    'AGENT_HANDOFF_THRESHOLD=88 AGENT_HANDOFF_MODE=warn "/tmp/agent-handoff/statusline-handoff-watch.sh"',
+  );
+  const hook = ((merged.hooks as Record<string, any[]>).UserPromptSubmit[0].hooks[0] as { command: string }).command;
+  assert.equal(hook, 'AGENT_HANDOFF_MODE=warn "/tmp/agent-handoff/handoff-required-hook.sh"');
+});
+
 test("invalid JSON fails safely before writing", () => {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), "agent-handoff-settings-"));
   const claude = path.join(home, ".claude");
